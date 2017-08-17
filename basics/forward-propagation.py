@@ -11,7 +11,7 @@ def activate(weights, inputs):
 
 
 def transfer(activation):
-    # using Sigmoid Equation
+    # using Sigmoid Equation( h(a) = 1/(1+exp(-a)) )
     return 1.0 / (1.0 + exp(-activation))
 
 
