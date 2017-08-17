@@ -3,6 +3,7 @@
 from math import exp
 
 
+# Calculate neuron activation for an input
 def activate(weights, inputs):
     activation = weights[-1]
     for i in range(len(weights) - 1):
@@ -10,11 +11,13 @@ def activate(weights, inputs):
     return activation
 
 
+# Transfer neuron activation
 def transfer(activation):
     # using Sigmoid Equation( h(a) = 1/(1+exp(-a)) )
     return 1.0 / (1.0 + exp(-activation))
 
 
+# Forward propagate input to a network output
 def forward_propagate(network, row):
     inputs = row
     for layer in network:
