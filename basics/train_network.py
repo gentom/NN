@@ -8,7 +8,8 @@ import forward_propagation
 import back_propagation
 
 
-def update_weights(network, row, l_rate):  # Update network weights with error
+# Update network weights with error
+def update_weights(network, row, l_rate):
     for i in range(len(network)):
         inputs = row[:-1]
         if i != 0:
@@ -34,63 +35,6 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
         print('>epoch={}, lrate={:.4}, error={:.4}'.format(
             epoch, l_rate, sum_error))
 
-
-'''#################################################################################'''
-
-'''
-def initialize_network(n_inputs, n_hidden, n_outputs):  # Initialize a network
-    
-    
-
-
-def activate(weights, inputs):  # Calculate neuron activation for an input
-    activation = weights[-1]
-    for i in range(len(weights) - 1):
-        activation += weights[i] * inputs[i]
-    return activation
-
-
-def transfer(activation):  # Transfer neuron activation
-    return 1.0 / (1.0 + exp(-activation))
-
-
-def forward_propagate(network, row):  # Forward propagate input to a network output
-    inputs = row
-    for layer in network:
-        new_inputs = []
-        for neuron in layer:
-            activation = activate(neuron['weights'], inputs)
-            neuron['output'] = transfer(activation)
-            new_inputs.append(neuron['output'])
-        inputs = new_inputs
-    return inputs
-
-
-def transfer_derivative(output):  # Calculate the derivative of an neuron output
-    return output * (1.0 - output)
-
-
-# Backpropagate error and store in neurons
-def backward_propagate_error(network, expected):
-    for i in reversed(range(len(network))):
-        layer = network[i]
-        errors = list()
-        if i != len(network) - 1:
-            for j in range(len(layer)):
-                error = 0.0
-                for neuron in network[i + 1]:
-                    error += (neuron['weights'][j] * neuron['delta'])
-                errors.append(error)
-        else:
-            for j in range(len(layer)):
-                neuron = layer[j]
-                errors.append(expected[j] - neuron['output'])
-        for j in range(len(layer)):
-            neuron = layer[j]
-            neuron['delta'] = errors[j] * transfer_derivative(neuron['output'])
-'''
-
-'''#################################################################################'''
 
 # Test training backprop algorithm
 seed(1)
