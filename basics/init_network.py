@@ -15,7 +15,9 @@ def init_network(n_inputs, n_hidden, n_outputs):
     return network
 
 
+'''
 seed(1)
 network = init_network(2, 1, 2)
 for layer in network:
     print(layer)
+'''
