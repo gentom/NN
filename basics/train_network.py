@@ -3,6 +3,9 @@
 from math import exp
 from random import seed
 from random import random
+import init_network
+import forward_propagation
+import back_propagation
 
 
 def update_weights(network, row, l_rate):  # Update network weights with error
@@ -21,12 +24,12 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
     for epoch in range(n_epoch):
         sum_error = 0
         for row in train:
-            outputs = forward_propagate(network, row)
+            outputs = forward_propagation.forward_propagate(network, row)
             expected = [0 for i in range(n_outputs)]
             expected[row[-1]] = 1
             sum_error += sum([(expected[i] - outputs[i]) **
                               2 for i in range(len(expected))])
-            backward_propagate_error(network, expected)
+            back_propagation.backward_propagate_error(network, expected)
             update_weights(network, row, l_rate)
         print('>epoch={}, lrate={:.4}, error={:.4}'.format(
             epoch, l_rate, sum_error))
@@ -34,16 +37,10 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
 
 '''#################################################################################'''
 
-
+'''
 def initialize_network(n_inputs, n_hidden, n_outputs):  # Initialize a network
-    network = list()
-    hidden_layer = [{'weights': [random() for i in range(n_inputs + 1)]}
-                    for i in range(n_hidden)]
-    network.append(hidden_layer)
-    output_layer = [{'weights': [random() for i in range(n_hidden + 1)]}
-                    for i in range(n_outputs)]
-    network.append(output_layer)
-    return network
+    
+    
 
 
 def activate(weights, inputs):  # Calculate neuron activation for an input
@@ -91,7 +88,9 @@ def backward_propagate_error(network, expected):
         for j in range(len(layer)):
             neuron = layer[j]
             neuron['delta'] = errors[j] * transfer_derivative(neuron['output'])
+'''
 
+'''#################################################################################'''
 
 # Test training backprop algorithm
 seed(1)
@@ -107,7 +106,7 @@ dataset = [[2.7810836, 2.550537003, 0],
            [7.673756466, 3.508563011, 1]]
 n_inputs = len(dataset[0]) - 1
 n_outputs = len(set([row[-1] for row in dataset]))
-network = initialize_network(n_inputs, 2, n_outputs)
+network = init_network.init_network(n_inputs, 2, n_outputs)
 train_network(network, dataset, 0.5, 20, n_outputs)
 for layer in network:
     print(layer)
