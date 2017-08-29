@@ -27,24 +27,27 @@ class NN:
         self.output_layer = [{'weights': [random.random() for i in range(self.n_hidden + 1)]}
                         for i in range(self.n_outputs)]
         self.network.append(self.output_layer)
+
+    def get_network(self):
+        return self.network
     
     def backprop(self, network, expected):
         for i in reversed(range(len(network))):
             layer = network[i]
-        errors = list()
-        if i != len(network) - 1:
-            for j in range(len(layer)):
-                error = 0.0
-                for neuron in network[i + 1]:
-                    error += (neuron['weights'][j] * neuron['delta'])
-                errors.append(error)
-        else:
+            errors = list()
+            if i != len(network) - 1:
+                for j in range(len(layer)):
+                    error = 0.0
+                    for neuron in network[i + 1]:
+                        error += (neuron['weights'][j] * neuron['delta'])
+                    errors.append(error)
+            else:
+                for j in range(len(layer)):
+                    neuron = layer[j]
+                    errors.append(expected[j] - neuron['output'])
             for j in range(len(layer)):
                 neuron = layer[j]
-                errors.append(expected[j] - neuron['output'])
-        for j in range(len(layer)):
-            neuron = layer[j]
-            neuron['delta'] = errors[j] * sigmoid_transfer(neuron['output'])
+                neuron['delta'] = errors[j] * sigmoid_transfer(neuron['output'])
     
     def fwdprop(self, network, row):
         inputs = row
