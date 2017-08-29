@@ -3,6 +3,8 @@
 import math
 import random
 
+# Work In Progress.
+
 def activate(weights, inputs):
     activation = weights[-1]
     for i in range(len(weights) - 1):
