@@ -33,7 +33,8 @@ class NN:
     def get_network(self):
         return self.network
     
-    def backprop(self, network, expected):
+    # back propagation
+    def __backprop(self, network, expected):
         for i in reversed(range(len(network))):
             layer = network[i]
             errors = list()
@@ -51,7 +52,8 @@ class NN:
                 neuron = layer[j]
                 neuron['delta'] = errors[j] * sigmoid_transfer(neuron['output'])
     
-    def fwdprop(self, network, row):
+    # forward propagation
+    def __fwdprop(self, network, row):
         inputs = row
         for layer in network:
             new_inputs = []
@@ -66,21 +68,21 @@ class NN:
         for epoch in range(n_epoch):
             sum_error = 0
         for row in train:
-            outputs = self.fwdprop(self.network, row)
+            outputs = self.__fwdprop(self.network, row)
             expected = [0 for i in range(self.n_outputs)]
             expected[row[-1]] = 1
             sum_error += sum([(expected[i] - outputs[i]) **
                               2 for i in range(len(expected))])
-            self.backprop(self.network, expected)
-            self.update_weights(self.network, row, l_rate)
+            self.__backprop(self.network, expected)
+            self.__update_weights(self.network, row, l_rate)
         print('>epoch={}, lrate={:.4}, error={:.4}'.format(
             epoch, l_rate, sum_error))
     
     def predict(self, row):
-        outputs = self.fwdprop(self.network, row)
+        outputs = self.__fwdprop(self.network, row)
         return outputs.index(max(outputs))
 
-    def update_weights(self, network, row, l_rate):
+    def __update_weights(self, network, row, l_rate):
         for i in range(len(network)):
             inputs = row[:-1]
         if i != 0:
